@@ -1,4 +1,10 @@
+//
+pry = require('pryjs')
+
+
+
 const fi = (function() {
+
   return {
     libraryMethod: function() {
       return 'Start by reading https://medium.com/javascript-scene/master-the-javascript-interview-what-is-functional-programming-7f218c68b3a0'
@@ -6,7 +12,7 @@ const fi = (function() {
 
     each: function(collection, iteratee) {
       const newCollection = (collection instanceof Array) ? collection.slice() : Object.values(collection)
-
+      eval(pry.it)
       for (let idx = 0; idx < newCollection.length; idx++)
         iteratee(newCollection[idx])
 
@@ -94,13 +100,29 @@ const fi = (function() {
     },
 
     flatten: function(collection, shallow, newArr=[]) {
-      if (!Array.isArray(collection)) return newArr.push(collection)
-      if (shallow) {
-        for (let val of collection)
-          Array.isArray(val) ? this.unpack(newArr, val) : newArr.push(val)
+      if (!Array.isArray(collection)) {
+        // console.log("newArr [ before ]", newArr)
+        // console.log("collection", collection)
+        // newArr.push(collection)
+        // console.log("newArr [ after ]", newArr)
+        // return newArr
+        return newArr.push(collection) //<= the original solution
+      }
+      if (!shallow) {
+        let counter = 0
+        for (let val of collection) {
+          counter++
+          // console.log("counter", counter)
+          // console.log("val", val)
+          this.flatten(val, false, newArr)
+        }
       } else {
         for (let val of collection) {
-          this.flatten(val, false, newArr)
+          if(Array.isArray(val)) {
+            for(let v of val) newArr.push(v)
+          } else {
+            newArr.push(val)
+          }
         }
       }
       return newArr
@@ -172,3 +194,18 @@ const fi = (function() {
 })()
 
 fi.libraryMethod()
+
+
+//
+// const nestedArr = [[1, 2], 4, [[3, 5], 6, [7, [8, "a"], 9]]]
+// const nestedArr1 = [1, [2, 4], [[3, 5], 6, [7, [8, "a"], 9]]]
+// const flatArr = fi.flatten(nestedArr)
+// console.log("first element is array", flatArr)
+// const flatArr1 = fi.flatten(nestedArr1)
+// console.log("first element is number", flatArr1)
+// const flatArr2 = fi.flatten(nestedArr1, true)
+// console.log("shallow flatten", flatArr2)
+// const num = fi.flatten(111)
+// console.log("one number", num)
+// const str = fi.flatten("Hello")
+// console.log("one string", str)

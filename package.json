@@ -29,14 +29,18 @@
     "babel-core": "6.26.3",
     "babel-preset-env": "1.7.0",
     "chai": "4.1.2",
+    "chai-spies-next": "^0.9.3",
     "file-system": "2.2.2",
     "jsdom": "9.2.1",
     "mocha": "5.2.0",
     "mocha-jsdom": "~1.1.0",
     "mocha-multi": "1.0.1",
-    "chai-spies-next": "^0.9.3"
+    "pryjs": "^1.0.3",
+    "require": "^2.4.20"
   },
   "dependencies": {
+    "pryjs": "^1.0.3",
+    "require": "^2.4.20",
     "sinon": "^7.3.2"
   }
 }
